@@ -7,10 +7,13 @@ package ui;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.swing.JOptionPane;
@@ -28,22 +31,24 @@ public class Compress extends javax.swing.JFrame {
     boolean cancel;
 
     private class Bar extends SwingWorker<Void, Void> {
-
+        
+        ZipOutputStream out;
+            
         @Override
         protected Void doInBackground() throws Exception {
 
             FileOutputStream dest = new FileOutputStream(dir.getAbsolutePath() + "\\" + name + ".zip");
-            ZipOutputStream out = new ZipOutputStream(dest);
+            out = new ZipOutputStream(dest);
+            int frac = 100 / files.size();
             for (File file : files) {
                 out.putNextEntry(new ZipEntry(file.getName()));
                 byte[] bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
                 out.write(bytes, 0, bytes.length);
                 out.closeEntry();
-            }
-
-            for (int i = 0; i < 100; i++) {
-                Thread.sleep(50);
-                ProgessBar.setValue(i);
+                for (int i = 0; i < frac; i++) {
+                    Thread.sleep(50);
+                    ProgressBar.setValue(ProgressBar.getValue() + 1);
+                }
             }
 
             out.close();
@@ -54,6 +59,12 @@ public class Compress extends javax.swing.JFrame {
         @Override
         public void done() {
             if (cancel) {
+                try {
+                    out.close();
+                    Files.deleteIfExists(Paths.get(dir.getAbsolutePath() + "\\" + name + ".zip"));
+                } catch (IOException ex) {
+                    Logger.getLogger(Compress.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 int res = JOptionPane.showConfirmDialog(null, "El proceso se ha cancelado.", "Proceso cancelado", JOptionPane.CLOSED_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (res == 0) {
                     closeWindow();
@@ -73,7 +84,7 @@ public class Compress extends javax.swing.JFrame {
     public Compress() {
         initComponents();
 
-        ProgessBar.setStringPainted(true);
+        ProgressBar.setStringPainted(true);
 
     }
 
@@ -106,7 +117,7 @@ public class Compress extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ProgessBar = new javax.swing.JProgressBar();
+        ProgressBar = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
@@ -139,7 +150,7 @@ public class Compress extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(ProgessBar, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -148,7 +159,7 @@ public class Compress extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ProgessBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -203,7 +214,7 @@ public class Compress extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar ProgessBar;
+    private javax.swing.JProgressBar ProgressBar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
