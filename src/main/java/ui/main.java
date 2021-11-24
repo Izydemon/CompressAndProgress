@@ -7,10 +7,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author izyde
- */
 public class main extends javax.swing.JFrame {
 
     JFileChooser fc = new JFileChooser();
@@ -107,7 +103,7 @@ public class main extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2))
-                                .addGap(0, 76, Short.MAX_VALUE))))
+                                .addGap(0, 86, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(textFieldDestination))
@@ -146,6 +142,11 @@ public class main extends javax.swing.JFrame {
         jMenu1.add(OpenDirectory);
 
         Compress.setText("Comprimir");
+        Compress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CompressActionPerformed(evt);
+            }
+        });
         jMenu1.add(Compress);
         jMenu1.add(jSeparator1);
 
@@ -249,12 +250,32 @@ public class main extends javax.swing.JFrame {
                 }
             }
         }
-        Compressor com = new Compressor();
+        Compress com = new Compress();
+        com.setVisible(true);
         com.SetFiles(selectedFiles);
         com.SetDir(destinationDir);
         com.SetName(textFieldName.getText());
-        com.execute();
+        com.startProcess();
     }//GEN-LAST:event_buttonCompressActionPerformed
+
+    private void CompressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompressActionPerformed
+        List<String> selected = listFile.getSelectedValuesList();
+        List<File> selectedFiles = new ArrayList<>();
+        for (File file : files) {
+            for (String name : selected) {
+                if(file.getName().equals(name)){
+                    selectedFiles.add(file);
+                    break;
+                }
+            }
+        }
+        Compress com = new Compress();
+        com.setVisible(true);
+        com.SetFiles(selectedFiles);
+        com.SetDir(destinationDir);
+        com.SetName(textFieldName.getText());
+        com.startProcess();
+    }//GEN-LAST:event_CompressActionPerformed
 
     /**
      * @param args the command line arguments
