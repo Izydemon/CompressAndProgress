@@ -1,10 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
+import java.util.List;
+import java.io.File;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +13,18 @@ import javax.swing.JOptionPane;
  */
 public class main extends javax.swing.JFrame {
 
+    JFileChooser fc = new JFileChooser();
+    DefaultListModel model = new DefaultListModel();
+    File[] files;
+    
+    File destinationDir;
+    
     /**
      * Creates new form main
      */
     public main() {
         initComponents();
+        listFile.setModel(model);
     }
 
     /**
@@ -29,6 +36,15 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listFile = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        textFieldName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        textFieldDestination = new javax.swing.JTextField();
+        buttonSelectDir = new javax.swing.JButton();
+        buttonCompress = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         OpenDirectory = new javax.swing.JMenuItem();
@@ -44,6 +60,80 @@ public class main extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
+
+        listFile.setBorder(javax.swing.BorderFactory.createTitledBorder("Archivos"));
+        listFile.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listFile);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Comprimir"));
+
+        jLabel1.setText("Nombre de la carpeta destino:");
+
+        jLabel2.setText("Ubicación de la carpeta destino:");
+
+        textFieldDestination.setEditable(false);
+
+        buttonSelectDir.setText("Seleccionar");
+        buttonSelectDir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSelectDirActionPerformed(evt);
+            }
+        });
+
+        buttonCompress.setText("Comprimir");
+        buttonCompress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCompressActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(textFieldName))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addGap(0, 76, Short.MAX_VALUE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(textFieldDestination))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonSelectDir))
+                    .addComponent(buttonCompress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textFieldDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonSelectDir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                .addComponent(buttonCompress)
+                .addContainerGap())
+        );
 
         jMenu1.setText("Archivo");
 
@@ -82,18 +172,43 @@ public class main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 277, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void OpenDirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenDirectoryActionPerformed
-        // TODO add your handling code here:
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+        int res = fc.showOpenDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION){
+            File directory = fc.getSelectedFile();
+            textFieldName.setText(directory.getName());
+            textFieldDestination.setText(directory.getAbsolutePath());
+            destinationDir = directory;
+            
+            files = new File(directory.getAbsolutePath()).listFiles();
+            model = new DefaultListModel();
+            listFile.setModel(model);
+            for (File file : files) {
+                model.addElement(file.getName());
+            }
+        }
     }//GEN-LAST:event_OpenDirectoryActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -111,6 +226,35 @@ public class main extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_CloseAppActionPerformed
+
+    private void buttonSelectDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSelectDirActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        int res = chooser.showOpenDialog(null);
+        if(res == JFileChooser.APPROVE_OPTION){
+            textFieldDestination.setText(chooser.getSelectedFile().getAbsolutePath());
+            destinationDir = chooser.getSelectedFile();
+        }
+    }//GEN-LAST:event_buttonSelectDirActionPerformed
+
+    private void buttonCompressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCompressActionPerformed
+        List<String> selected = listFile.getSelectedValuesList();
+        List<File> selectedFiles = new ArrayList<>();
+        for (File file : files) {
+            for (String name : selected) {
+                if(file.getName().equals(name)){
+                    selectedFiles.add(file);
+                    break;
+                }
+            }
+        }
+        Compressor com = new Compressor();
+        com.SetFiles(selectedFiles);
+        com.SetDir(destinationDir);
+        com.SetName(textFieldName.getText());
+        com.execute();
+    }//GEN-LAST:event_buttonCompressActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,9 +296,18 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem Compress;
     private javax.swing.JMenuItem Help;
     private javax.swing.JMenuItem OpenDirectory;
+    private javax.swing.JButton buttonCompress;
+    private javax.swing.JButton buttonSelectDir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JList<String> listFile;
+    private javax.swing.JTextField textFieldDestination;
+    private javax.swing.JTextField textFieldName;
     // End of variables declaration//GEN-END:variables
 }
