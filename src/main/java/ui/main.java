@@ -41,16 +41,19 @@ public class main extends javax.swing.JFrame {
         textFieldDestination = new javax.swing.JTextField();
         buttonSelectDir = new javax.swing.JButton();
         buttonCompress = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         OpenDirectory = new javax.swing.JMenuItem();
-        Compress = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         CloseApp = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         Help = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -87,10 +90,17 @@ public class main extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Desarrollado por:");
+
+        jLabel4.setText("- Noah Hernández Morales");
+
+        jLabel5.setText("- Isidro Bermúdez Fernández");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -103,7 +113,7 @@ public class main extends javax.swing.JFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2))
-                                .addGap(0, 86, Short.MAX_VALUE))))
+                                .addGap(0, 87, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(textFieldDestination))
@@ -112,6 +122,12 @@ public class main extends javax.swing.JFrame {
                         .addComponent(buttonSelectDir))
                     .addComponent(buttonCompress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +142,13 @@ public class main extends javax.swing.JFrame {
                 .addComponent(textFieldDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSelectDir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(buttonCompress)
                 .addContainerGap())
         );
@@ -140,14 +162,6 @@ public class main extends javax.swing.JFrame {
             }
         });
         jMenu1.add(OpenDirectory);
-
-        Compress.setText("Comprimir");
-        Compress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CompressActionPerformed(evt);
-            }
-        });
-        jMenu1.add(Compress);
         jMenu1.add(jSeparator1);
 
         CloseApp.setText("Cerrar");
@@ -163,6 +177,11 @@ public class main extends javax.swing.JFrame {
         jMenu2.setText("Ayuda");
 
         Help.setText("Acerca de");
+        Help.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HelpActionPerformed(evt);
+            }
+        });
         jMenu2.add(Help);
 
         jMenuBar1.add(jMenu2);
@@ -258,24 +277,19 @@ public class main extends javax.swing.JFrame {
         com.startProcess();
     }//GEN-LAST:event_buttonCompressActionPerformed
 
-    private void CompressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompressActionPerformed
-        List<String> selected = listFile.getSelectedValuesList();
-        List<File> selectedFiles = new ArrayList<>();
-        for (File file : files) {
-            for (String name : selected) {
-                if(file.getName().equals(name)){
-                    selectedFiles.add(file);
-                    break;
-                }
-            }
-        }
-        Compress com = new Compress();
-        com.setVisible(true);
-        com.SetFiles(selectedFiles);
-        com.SetDir(destinationDir);
-        com.SetName(textFieldName.getText());
-        com.startProcess();
-    }//GEN-LAST:event_CompressActionPerformed
+    private void HelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HelpActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Para hacer uso de la aplicación debe primero introducir una carpeta origen \n"
+                + "la cual se mostrará su contenido en el apartado Archivos.\n\n"
+                + "Con el botón Control del teclado y el clic izquierdo del ratón se seleccionarán los archivos de la lista \n"
+                + "que se desean comprimir.\n"
+                + "El nombre de la carpeta destino es por defecto el nombre de \n"
+                + "la carpeta original, pero puede ser modificado por el usuario en el campo correspondiente.\n"
+                + "Al igual que la carpeta destino, que por defecto es la misma \n"
+                + "que el origen y puede ser modificada por el usuario.\n"
+                + "Para comenzar el proceso de compresión, pulse el botón Comprimir.\n"
+                + "Si quiere abortar el proceso de compresión presione el botón cancelar antes de que termine el proceso.\n\n"
+                + "Desarrollado por: Noah Hernández Morales e Isidro Bermúdez Fernández", "Ayuda", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_HelpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,13 +328,15 @@ public class main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem CloseApp;
-    private javax.swing.JMenuItem Compress;
     private javax.swing.JMenuItem Help;
     private javax.swing.JMenuItem OpenDirectory;
     private javax.swing.JButton buttonCompress;
     private javax.swing.JButton buttonSelectDir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
